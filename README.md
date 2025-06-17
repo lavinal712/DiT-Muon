@@ -17,7 +17,25 @@ PS: We do not fully search the hyper-parameters for Muon optimizer, so the perfo
 | DiT Model | Train Steps | FID | sFID | Inception Score | Precision | Recall |
 |-----------|-------------|-----|------|-----------------|-----------|--------|
 | B/4 (AdamW) | 100K        | 99.04 | 19.39 | 12.96 | 0.25 | 0.39 |
-| B/4 (Muon)  | 100K        | 136.37 | 45.13 | 8.51 | 0.16 | 0.20 |
+| B/4 (Muon)  | 100K        | 80.85 | 12.97 | 16.05 | 0.30 | 0.48 |
+
+We thank [Su](https://www.zhihu.com/people/su-jian-lin-22) for suggesting two methods to align Muon with AdamW:
+
+1. Increase Muon's learning rate from 1e-4 to 1e-3.
+2. Modify the update algorithm in `muon.py` (see [Muon续集：为什么我们选择尝试Muon？](https://spaces.ac.cn/archives/10739) for details).
+```python
+def muon_update(grad, momentum, beta=0.95, ns_steps=5, nesterov=True):
+    momentum.lerp_(grad, 1 - beta)
+    update = grad.lerp_(momentum, beta) if nesterov else momentum
+    if update.ndim == 4: # for the case of conv filters
+        update = update.view(len(update), -1)
+    update = zeropower_via_newtonschulz5(update, steps=ns_steps)
+    # update *= max(1, grad.size(-2) / grad.size(-1))**0.5
+    update *= 0.2 * max(grad.size(-2), grad.size(-1))**0.5
+    return update
+```
+
+For simplicity, we adopt the first approach.
 
 ## Scalable Diffusion Models with Transformers (DiT)<br><sub>Official PyTorch Implementation</sub>
 

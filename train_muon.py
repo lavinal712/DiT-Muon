@@ -177,7 +177,7 @@ def main(args):
                             "x_embedder" not in name and "t_embedder" not in name and "y_embedder" not in name)
                             and param.requires_grad]
     opt = MuonWithAuxAdam([
-        {"params": muon_groups, "use_muon": True, "lr": 1e-4, "weight_decay": 0},
+        {"params": muon_groups, "use_muon": True, "lr": 1e-3, "weight_decay": 0},
         {"params": adamw_groups, "use_muon": False, "lr": 1e-4, "weight_decay": 0}
     ])
 
