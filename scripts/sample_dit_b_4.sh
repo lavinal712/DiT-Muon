@@ -4,7 +4,7 @@ torchrun --nproc_per_node=2 sample_ddp.py \
     --sample-dir ./samples \
     --per-proc-batch-size 64 \
     --image-size 256 \
-    --ckpt ./results/dit_b_4/000-DiT-B-4/checkpoints/0100000.pt \
+    --ckpt ./results/dit_b_4/000-DiT-B-4/checkpoints/0400000.pt \
     --num-classes 1000 \
     --cfg-scale 1.0 \
     --global-seed 42 \

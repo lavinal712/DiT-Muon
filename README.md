@@ -18,6 +18,8 @@ PS: We do not fully search the hyper-parameters for Muon optimizer, so the perfo
 |-----------|-------------|-----|------|-----------------|-----------|--------|
 | B/4 (AdamW) | 100K        | 99.04 | 19.39 | 12.96 | 0.25 | 0.39 |
 | B/4 (Muon)  | 100K        | 80.85 | 12.97 | 16.05 | 0.30 | 0.48 |
+| B/4 (AdamW) | 400K        | 68.16 | 13.66 | 20.53 | 0.36 | 0.54 |
+| B/4 (Muon)  | 400K        | 59.07 | 11.85 | 24.00 | 0.40 | 0.57 |
 
 We thank [Su](https://www.zhihu.com/people/su-jian-lin-22) for suggesting two methods to align Muon with AdamW:
 
